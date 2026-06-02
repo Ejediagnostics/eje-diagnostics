@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El 76% de las transformaciones logísticas no cumple sus metas — Eje Diagnostics</title>
+<meta name="description" content="Tres de cada cuatro transformaciones logísticas no cumplen sus metas de presupuesto, plazo o KPI. Por qué pasa, cuánto cuesta y qué hacer esta semana — sin esperar al próximo ciclo de planificación.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --carbon:#1A1A18; --graphite:#2B2B28; --orange:#E07B00; --orange-d:#c96e00;
+    --green:#1E6641; --bone:#F5F4F0; --white:#FFFFFF; --gray:#888888;
+    --gray-l:#C8C7C0; --ink:#2a2a26; --line-l:rgba(26,26,24,.12);
+    --display:'Barlow Condensed',sans-serif; --body:'IBM Plex Sans',sans-serif;
+    --mono:'IBM Plex Mono',monospace;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--body);background:var(--bone);color:var(--ink);
+    font-size:17px;line-height:1.7;-webkit-font-smoothing:antialiased}
+
+  /* NAV */
+  nav{position:sticky;top:0;z-index:50;height:58px;background:var(--carbon);
+    display:flex;align-items:center;justify-content:space-between;padding:0 28px;
+    border-bottom:2px solid var(--orange)}
+  .nav-logo{font-family:var(--display);font-weight:700;font-size:19px;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--bone);text-decoration:none;display:flex;align-items:center;gap:11px}
+  .nav-logo .badge{width:28px;height:28px;border:3px solid var(--orange);display:flex;
+    align-items:center;justify-content:center;font-size:12px;color:var(--orange)}
+  .nav-logo b{color:var(--orange)}
+  .nav-cta{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em;
+    background:var(--orange);color:var(--carbon);padding:9px 16px;text-decoration:none;
+    font-weight:500;transition:background .2s,transform .15s}
+  .nav-cta:hover{background:var(--orange-d);transform:translateY(-1px)}
+
+  .wrap{max-width:740px;margin:0 auto;padding:0 28px}
+
+  /* HEADER */
+  header.art{padding:64px 0 36px}
+  .kicker{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.16em;
+    color:var(--orange);margin-bottom:22px}
+  h1{font-family:var(--display);font-weight:700;text-transform:uppercase;letter-spacing:.01em;
+    line-height:1.05;font-size:clamp(30px,6vw,52px);color:var(--carbon)}
+  .lead{font-size:20px;line-height:1.6;color:#55534d;margin-top:22px;font-weight:400}
+
+  /* STAT HERO */
+  .stat-hero{background:var(--carbon);color:var(--bone);padding:34px 30px;margin:40px 0;
+    border-left:5px solid var(--orange)}
+  .stat-hero .big{font-family:var(--display);font-weight:700;font-size:clamp(64px,14vw,108px);
+    line-height:.9;color:var(--orange)}
+  .stat-hero .txt{font-size:16px;color:var(--gray-l);margin-top:10px;max-width:48ch}
+  .stat-hero .src{font-family:var(--mono);font-size:11px;color:var(--gray);letter-spacing:.08em;
+    text-transform:uppercase;margin-top:18px}
+
+  /* BODY */
+  article h2{font-family:var(--display);font-weight:700;text-transform:uppercase;letter-spacing:.02em;
+    font-size:clamp(22px,3.6vw,30px);line-height:1.12;color:var(--carbon);margin:46px 0 16px}
+  article p{margin:0 0 18px}
+  article p b{color:var(--carbon);font-weight:600}
+  .src-inline{font-family:var(--mono);font-size:11px;color:var(--gray);letter-spacing:.06em;
+    text-transform:uppercase;margin:-8px 0 24px}
+
+  /* BRECHA callout */
+  .brecha{display:flex;gap:30px;flex-wrap:wrap;background:var(--white);border:1px solid var(--line-l);
+    padding:28px 30px;margin:30px 0}
+  .brecha div{flex:1;min-width:160px}
+  .brecha .n{font-family:var(--display);font-weight:700;font-size:46px;line-height:1;color:var(--orange)}
+  .brecha .l{font-size:14px;color:#55534d;margin-top:8px}
+
+  /* COST box */
+  .cost{background:var(--carbon);color:var(--bone);padding:30px;margin:34px 0;text-align:center}
+  .cost .lab{font-family:var(--mono);font-size:11px;color:var(--gray);text-transform:uppercase;
+    letter-spacing:.1em}
+  .cost .val{font-family:var(--display);font-weight:700;font-size:clamp(34px,7vw,52px);
+    color:var(--orange);line-height:1;margin:10px 0}
+  .cost .note{font-family:var(--mono);font-size:10px;color:var(--gray);letter-spacing:.04em}
+
+  /* ACTIONS */
+  .actions{margin:26px 0}
+  .action{display:flex;gap:18px;padding:20px 0;border-top:1px solid var(--line-l)}
+  .action:last-child{border-bottom:1px solid var(--line-l)}
+  .action .num{font-family:var(--display);font-weight:700;font-size:30px;color:var(--orange);
+    line-height:1;min-width:34px}
+  .action .t{font-family:var(--display);font-weight:700;text-transform:uppercase;letter-spacing:.03em;
+    font-size:17px;color:var(--carbon);margin-bottom:5px}
+  .action .d{font-size:15px;color:#55534d;line-height:1.6}
+
+  /* PULL QUOTE */
+  .pull{font-family:var(--display);font-weight:600;text-transform:uppercase;letter-spacing:.01em;
+    font-size:clamp(22px,4vw,30px);line-height:1.25;color:var(--carbon);border-left:5px solid var(--orange);
+    padding:6px 0 6px 24px;margin:40px 0}
+
+  /* CTA */
+  .cta{background:var(--carbon);color:var(--bone);text-align:center;padding:52px 28px;margin-top:56px}
+  .cta h3{font-family:var(--display);font-weight:700;text-transform:uppercase;letter-spacing:.02em;
+    font-size:clamp(24px,4.5vw,34px);color:var(--bone);max-width:18ch;margin:0 auto}
+  .cta p{font-family:var(--mono);font-size:12px;color:var(--gray);letter-spacing:.08em;
+    text-transform:uppercase;margin:16px 0 28px}
+  .cta a{font-family:var(--display);font-weight:700;font-size:17px;text-transform:uppercase;
+    letter-spacing:.06em;background:var(--orange);color:var(--carbon);padding:16px 34px;
+    text-decoration:none;display:inline-flex;align-items:center;gap:10px;
+    transition:background .2s,transform .15s,box-shadow .2s}
+  .cta a:hover{background:var(--orange-d);transform:translateY(-2px);box-shadow:0 12px 30px rgba(224,123,0,.3)}
+  .cta a svg{width:18px;height:18px}
+
+  /* SOURCES */
+  .sources{padding:36px 0 10px}
+  .sources h4{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.14em;
+    color:var(--gray);margin-bottom:14px}
+  .sources li{font-family:var(--mono);font-size:12px;color:#6b6960;line-height:1.9;list-style:none}
+
+  /* FOOTER */
+  footer{background:var(--carbon);border-top:2px solid var(--orange);padding:30px 28px;
+    display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .footer-logo{font-family:var(--display);font-weight:700;font-size:17px;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--bone)}
+  .footer-logo b{color:var(--orange)}
+  .footer-meta{font-family:var(--mono);font-size:10px;color:var(--gray);text-transform:uppercase;
+    letter-spacing:.1em;text-align:right;line-height:1.7}
+  a.back{font-family:var(--mono);font-size:11px;color:var(--gray);text-decoration:none;letter-spacing:.06em}
+  a.back:hover{color:var(--orange)}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo"><span class="badge">EJ</span>EJE <b>DIAGNOSTICS</b></a>
+  <a href="index.html#auditoria" class="nav-cta">Auditoría gratuita</a>
+</nav>
+
+<header class="art">
+  <div class="wrap">
+    <div class="kicker">Análisis operativo · Flotas de última milla</div>
+    <h1>El 76% de las transformaciones logísticas no cumple sus metas. Tu TMS probablemente es parte de esa estadística.</h1>
+    <p class="lead">Tres de cada cuatro transformaciones logísticas fallan. La mayoría no lo sabe hasta que ya gastó el presupuesto.</p>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="stat-hero">
+    <div class="big">76%</div>
+    <div class="txt">de las transformaciones logísticas no cumplen sus metas de presupuesto, plazo o KPI.</div>
+    <div class="src">Gartner · Survey of Logistics Professionals · n=306 · ago 2024</div>
+  </div>
+</div>
+
+<article class="wrap">
+  <h2>El dato que nadie quiere ver en su reunión de directorio</h2>
+  <p>En agosto de 2024, Gartner publicó una encuesta a 306 profesionales de logística en empresas con más de USD 500M de revenue global. Hallazgo principal: el 76% de las transformaciones logísticas no cumplen sus métricas de presupuesto, plazo o KPI.</p>
+  <p>McKinsey documenta consistentemente lo mismo para transformaciones digitales en general: 70% no alcanza sus objetivos declarados. La dirección es la misma. El patrón se repite.</p>
+  <p>Para LATAM, el panorama es probablemente más severo. La adopción de TMS es más reciente y la infraestructura de datos preexistente, más fragmentada. La dirección del hallazgo aplica; la magnitud podría ser incluso mayor.</p>
+
+  <div class="brecha">
+    <div><div class="n">81%</div><div class="l">cree que transformar es crítico</div></div>
+    <div><div class="n">1 de cada 4</div><div class="l">lo logra</div></div>
+  </div>
+
+  <h2>Por qué pasa — y no es lo que el proveedor te dijo en el kick-off</h2>
+  <p>El 81% de los líderes de logística cree que la transformación es crítica. Solo el 20% adopta el enfoque correcto de gestión del cambio para ejecutarla. Esa brecha explica buena parte del 76%.</p>
+  <p>Gartner midió el impacto del liderazgo que empuja la transformación con urgencia pero sin construir adopción participativa — y encontró que ese enfoque <b>reduce la probabilidad de éxito en un 47%</b>. No la potencia. La deteriora.</p>
+  <p>La integración con sistemas legacy aparece como causa de falla primaria en prácticamente toda la literatura sectorial. No es un problema técnico menor: es donde la promesa del sistema choca con la infraestructura heredada.</p>
+  <p>La evidencia más clara de falla no aparece en el dashboard del TMS. Aparece en el escritorio del operador: las planillas paralelas que el equipo mantiene porque el sistema no le da lo que necesita.</p>
+  <p class="src-inline">Nuvocargo (2026) · TMS Implementation Failure Guide</p>
+  <p>No es deslealtad al sistema. Es la respuesta racional de un equipo que encontró que el workaround es más confiable que la herramienta.</p>
+
+  <h2>El costo de no actuar — puesto en números que sí aparecen en el P&amp;L</h2>
+  <p>Para una operación de 15 camiones con 3.000 envíos mensuales, la fricción acumulada de un TMS subutilizado se estima entre USD 14.400 y 30.000 anuales. El rango contempla dos vectores: el tiempo del equipo absorbido por tareas manuales —en una plantilla de 3 a 4 personas, el 35% de horas no productivas representa entre USD 840 y 1.680 mensuales— más el costo de las decisiones subóptimas evitables con dato predictivo disponible.</p>
+  <p>No es un gasto que aparece en una línea del estado de resultados. Se distribuye en ineficiencia acumulada que nadie atribuye al TMS porque nadie mide el costo del workaround.</p>
+
+  <div class="cost">
+    <div class="lab">Costo estimado · flota 15 camiones · 3.000 envíos/mes</div>
+    <div class="val">USD 14.400 – 30.000 / año</div>
+    <div class="note">* Estimación propia basada en fricción operativa documentada · no es dato primario</div>
+  </div>
+
+  <h2>Qué hacer esta semana — sin esperar al próximo ciclo de planificación</h2>
+  <p>Tres acciones que no requieren presupuesto ni consultor para empezar:</p>
+  <div class="actions">
+    <div class="action"><div class="num">1</div>
+      <div><div class="t">Auditá usuarios activos vs. licencias pagadas</div>
+        <div class="d">En las últimas 4 semanas, no el total de usuarios registrados — los que realmente operaron el sistema. La brecha entre ambos números es el primer indicador de adopción real.</div></div></div>
+    <div class="action"><div class="num">2</div>
+      <div><div class="t">Identificá qué decisiones se toman fuera del TMS</div>
+        <div class="d">Ruteo, asignación de cargas, seguimiento de entregas: ¿dónde termina el sistema y dónde empieza la planilla? Ese mapa de workarounds es más útil que cualquier reporte.</div></div></div>
+    <div class="action"><div class="num">3</div>
+      <div><div class="t">Medí el tiempo en tareas que el TMS debería automatizar</div>
+        <div class="d">Una semana de registro honesto: cuántas horas en doble carga de datos, reconciliación manual y comunicaciones que el sistema debería generar solo.</div></div></div>
+  </div>
+
+  <div class="pull">¿Cuándo auditaron si el TMS resuelve lo que justificó su compra — o si el equipo ya lo rodeó con planillas propias?</div>
+</article>
+
+<div class="cta">
+  <h3>Auditoría gratuita. 3 hallazgos. Acción en 48h.</h3>
+  <p>Sin software nuevo · Con los CSV que ya generás · Sin compromiso</p>
+  <a href="index.html#auditoria">Solicitar mi auditoría gratuita
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m12 16 4-4-4-4"/><path d="M8 12h8"/></svg></a>
+</div>
+
+<div class="wrap sources">
+  <h4>Fuentes</h4>
+  <ul>
+    <li>Gartner · Survey of Logistics Professionals · ago 2024 · n=306.</li>
+    <li>McKinsey &amp; Company · múltiples publicaciones 2021–2024.</li>
+    <li>Nuvocargo · TMS Implementation Failure Guide · 2026.</li>
+    <li>Panorama Consulting · Top Reasons for TMS Failure.</li>
+    <li>Estimación propia · USD 14.400–30.000 anuales · flota 15 camiones · dos vectores (tiempo manual + decisiones subóptimas).</li>
+  </ul>
+</div>
+
+<footer>
+  <div>
+    <div class="footer-logo">EJE <b>DIAGNOSTICS</b></div>
+    <a class="back" href="index.html">← Volver al inicio</a>
+  </div>
+  <div class="footer-meta">
+    Cero promesas. Tres hallazgos. Acción en 48h.<br>
+    Buenos Aires · LATAM · 2026
+  </div>
+</footer>
+
+</body>
+</html>
