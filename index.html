@@ -94,6 +94,21 @@
   .btn-secondary::after{content:'→'}
 
   /* ── PROBLEMA (light) ── */
+  .problema-head{display:flex;gap:48px;align-items:flex-start}
+  .problema-head-left{flex:1;min-width:0}
+  .analisis-panel{width:360px;flex-shrink:0;background:var(--carbon);color:var(--bone);
+    padding:24px 26px 14px;border-top:3px solid var(--orange);margin-top:30px}
+  .ap-label{font-family:var(--mono);font-size:10px;text-transform:uppercase;
+    letter-spacing:.16em;color:var(--orange);margin-bottom:16px}
+  .ap-item{display:block;text-decoration:none;padding:16px 0;border-top:1px solid var(--line-d)}
+  .ap-item:first-of-type{border-top:none;padding-top:0}
+  .ap-title{display:block;font-family:var(--display);font-weight:600;text-transform:uppercase;
+    letter-spacing:.02em;font-size:18px;line-height:1.15;color:var(--bone);transition:color .2s}
+  .ap-go{display:inline-flex;align-items:center;gap:7px;margin-top:10px;font-family:var(--mono);
+    font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--orange);transition:gap .2s}
+  .ap-go svg{width:14px;height:14px}
+  .ap-item:hover .ap-title{color:var(--orange)}
+  .ap-item:hover .ap-go{gap:12px}
   .problema-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;margin-top:46px;
     background:var(--line-l)}
   .problema-card{background:var(--white);padding:34px 30px;border-left:4px solid var(--orange)}
@@ -230,6 +245,7 @@
     .hero{padding:104px 20px 64px} .hero-stat{flex-direction:column;align-items:flex-start;gap:10px}
     section{padding:62px 20px}
     .problema-grid,.props{grid-template-columns:1fr}
+    .problema-head{flex-direction:column;gap:24px} .analisis-panel{width:100%;margin-top:4px}
     .steps{grid-template-columns:1fr} .step-mid{transform:rotate(90deg);padding:6px 0}
     .flow{grid-template-columns:1fr 1fr} .flow-step .arrow{display:none}
     .nosotros-inner,.auditoria-inner{grid-template-columns:1fr;gap:36px}
@@ -276,10 +292,29 @@
 <!-- PROBLEMA (light) -->
 <section class="light" id="problema">
   <div class="inner">
-    <div class="section-label">El problema</div>
-    <h2 class="section-title">El 76% de las transformaciones<br>logísticas no cumple sus metas</h2>
-    <div class="divider"></div>
-    <p class="lead">La causa no es tecnológica, es operativa: las alarmas no se convierten en acciones, los datos no se traducen en decisiones, y el equipo aprende a rodear el sistema.</p>
+    <div class="problema-head">
+      <div class="problema-head-left">
+        <div class="section-label">El problema</div>
+        <h2 class="section-title">El 76% de las transformaciones<br>logísticas no cumple sus metas</h2>
+        <div class="divider"></div>
+        <p class="lead">La causa no es tecnológica, es operativa: las alarmas no se convierten en acciones, los datos no se traducen en decisiones, y el equipo aprende a rodear el sistema.</p>
+      </div>
+      <aside class="analisis-panel">
+        <div class="ap-label">Análisis completo</div>
+        <a class="ap-item" href="analisis-tms.html">
+          <span class="ap-title">Por qué el 76% falla — y qué hacer esta semana</span>
+          <span class="ap-go">Leer el análisis
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+        </a>
+        <!-- Al publicar el Contraste #2, duplicá este bloque <a class="ap-item"> con su título y su archivo:
+        <a class="ap-item" href="analisis-decision-intuicion.html">
+          <span class="ap-title">TÍTULO DEL CONTRASTE 2</span>
+          <span class="ap-go">Leer el análisis
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+        </a>
+        -->
+      </aside>
+    </div>
 
     <div class="problema-grid reveal">
       <div class="problema-card">
