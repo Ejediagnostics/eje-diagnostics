@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eje Diagnostics — Presentación Operativa · Barsat 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700&family=IBM+Plex+Mono:wght@400&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --carbon:   #1A1A18;
+    --graphite: #2B2B28;
+    --orange:   #E07B00;
+    --green:    #1E6641;
+    --bone:     #F5F4F0;
+    --grey:     #888888;
+    --border:   rgba(245,244,240,0.08);
+  }
+
+  html { font-size: 16px; scroll-behavior: smooth; }
+
+  body {
+    background: var(--carbon);
+    color: var(--bone);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+    display: flex;
+    min-height: 100vh;
+  }
+
+  /* ── SIDEBAR ── */
+  nav {
+    width: 240px;
+    min-width: 240px;
+    background: var(--graphite);
+    border-right: 1px solid var(--border);
+    position: fixed;
+    top: 0; left: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 0;
+    z-index: 100;
+  }
+
+  .nav-logo {
+    padding: 0 1.5rem 2rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 1.5rem;
+  }
+
+  .nav-logo .eje { 
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.5rem;
+    letter-spacing: 0.08em;
+    color: var(--bone);
+    text-transform: uppercase;
+  }
+
+  .nav-logo .diag { color: var(--orange); }
+
+  .nav-logo .tagline {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--grey);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 0.25rem;
+  }
+
+  nav ul { list-style: none; flex: 1; }
+
+  nav ul li a {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.7rem 1.5rem;
+    text-decoration: none;
+    color: var(--grey);
+    font-size: 0.78rem;
+    font-weight: 500;
+    transition: color 0.2s, background 0.2s;
+    border-left: 2px solid transparent;
+    line-height: 1.3;
+  }
+
+  nav ul li a:hover { color: var(--bone); background: rgba(245,244,240,0.04); }
+
+  nav ul li a.active {
+    color: var(--orange);
+    border-left-color: var(--orange);
+    background: rgba(224,123,0,0.06);
+  }
+
+  nav ul li a .nav-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--grey);
+    min-width: 18px;
+    padding-top: 0.05rem;
+  }
+
+  nav ul li a.active .nav-num { color: var(--orange); }
+
+  .nav-footer {
+    padding: 1rem 1.5rem 0;
+    border-top: 1px solid var(--border);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--grey);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── MAIN ── */
+  main {
+    margin-left: 240px;
+    flex: 1;
+    padding: 3rem 4rem;
+    max-width: 900px;
+  }
+
+  /* ── SECTIONS ── */
+  section {
+    min-height: 100vh;
+    padding: 2rem 0 5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  section:last-child { border-bottom: none; }
+
+  .section-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--orange);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.75rem;
+  }
+
+  h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 2.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.1;
+    color: var(--bone);
+    margin-bottom: 2rem;
+  }
+
+  h2 span { color: var(--orange); }
+
+  h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--bone);
+    margin: 2.5rem 0 1rem;
+  }
+
+  h4 {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--bone);
+    margin: 1.5rem 0 0.4rem;
+  }
+
+  p {
+    font-size: 0.9rem;
+    color: rgba(245,244,240,0.8);
+    margin-bottom: 1rem;
+    max-width: 680px;
+  }
+
+  .lead {
+    font-size: 1rem;
+    color: var(--bone);
+    font-weight: 500;
+    max-width: 680px;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+  }
+
+  .disclaimer {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--grey);
+    border-left: 2px solid var(--border);
+    padding-left: 1rem;
+    margin: 1rem 0 1.5rem;
+    max-width: 640px;
+    line-height: 1.6;
+  }
+
+  /* ── CARDS ── */
+  .card-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+
+  .card {
+    background: var(--graphite);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.25rem 1.5rem;
+  }
+
+  .card-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--orange);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.5rem;
+  }
+
+  .card h4 { margin: 0 0 0.4rem; font-size: 0.88rem; }
+  .card p { font-size: 0.82rem; margin: 0; }
+
+  .card .source {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--grey);
+    margin-top: 0.75rem;
+  }
+
+  /* ── FLOW DIAGRAM ── */
+  .flow {
+    background: var(--graphite);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2rem;
+    margin: 1.5rem 0;
+    position: relative;
+  }
+
+  .flow-row {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 0;
+    position: relative;
+  }
+
+  .flow-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    gap: 0;
+  }
+
+  .flow-node {
+    background: var(--carbon);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0.6rem 1rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--bone);
+    text-align: center;
+    width: 100%;
+    position: relative;
+    line-height: 1.3;
+  }
+
+  .flow-node.human {
+    border-color: var(--orange);
+    color: var(--orange);
+  }
+
+  .flow-node.agent {
+    border-color: rgba(245,244,240,0.2);
+  }
+
+  .flow-node.verif {
+    border-color: var(--green);
+    color: #4CAF82;
+  }
+
+  .flow-node.output {
+    border-color: var(--green);
+    color: var(--green);
+    font-weight: 500;
+  }
+
+  .flow-node .node-label {
+    font-size: 0.58rem;
+    color: var(--grey);
+    display: block;
+    margin-top: 0.2rem;
+    font-family: 'IBM Plex Sans', sans-serif;
+  }
+
+  .flow-arrow {
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--grey);
+    font-size: 0.85rem;
+    padding: 0.3rem 0;
+    text-align: center;
+    width: 100%;
+  }
+
+  .flow-branch {
+    display: flex;
+    gap: 0.75rem;
+    width: 100%;
+    margin-top: 0;
+  }
+
+  .flow-branch-item {
+    flex: 1;
+    background: var(--carbon);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0.5rem 0.75rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    color: rgba(245,244,240,0.6);
+    line-height: 1.3;
+  }
+
+  .flow-note {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--grey);
+    text-align: right;
+    margin-top: 1rem;
+    font-style: italic;
+  }
+
+  /* ── LAYERS ── */
+  .layers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin: 1rem 0;
+  }
+
+  .layer {
+    background: var(--carbon);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1rem 1.25rem;
+  }
+
+  .layer-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--orange);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.3rem;
+  }
+
+  .layer h4 { margin: 0 0 0.35rem; font-size: 0.85rem; }
+  .layer p { font-size: 0.78rem; margin: 0; color: rgba(245,244,240,0.7); }
+
+  /* ── LINK INTERNAL ── */
+  .internal-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--orange);
+    text-decoration: none;
+    border: 1px solid rgba(224,123,0,0.3);
+    border-radius: 3px;
+    padding: 0.35rem 0.75rem;
+    margin: 1rem 0;
+    transition: background 0.15s;
+    cursor: pointer;
+  }
+
+  .internal-link:hover { background: rgba(224,123,0,0.08); }
+
+  /* ── ROI RULES ── */
+  .rules-list {
+    list-style: none;
+    margin: 0.75rem 0;
+  }
+
+  .rules-list li {
+    font-size: 0.82rem;
+    color: rgba(245,244,240,0.8);
+    padding: 0.45rem 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 0.75rem;
+    max-width: 640px;
+  }
+
+  .rules-list li:last-child { border-bottom: none; }
+
+  .rules-list li::before {
+    content: '—';
+    color: var(--grey);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    flex-shrink: 0;
+    padding-top: 0.05rem;
+  }
+
+  /* ── ERRORS ── */
+  .error-item {
+    background: var(--graphite);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--orange);
+    border-radius: 0 4px 4px 0;
+    padding: 1rem 1.25rem;
+    margin-bottom: 0.75rem;
+    max-width: 760px;
+  }
+
+  .error-item .error-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--orange);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.3rem;
+  }
+
+  .error-item h4 { font-size: 0.85rem; margin: 0 0 0.4rem; }
+  .error-item p { font-size: 0.8rem; margin: 0; color: rgba(245,244,240,0.75); }
+
+  .error-item .detection {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    color: #4CAF82;
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  /* ── TABLE ── */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.78rem;
+    margin: 1rem 0;
+  }
+
+  .data-table th {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--grey);
+    text-align: left;
+    padding: 0.6rem 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .data-table td {
+    padding: 0.65rem 1rem;
+    border-bottom: 1px solid rgba(245,244,240,0.04);
+    color: rgba(245,244,240,0.8);
+    vertical-align: top;
+    line-height: 1.4;
+  }
+
+  .data-table tr:last-child td { border-bottom: none; }
+
+  .data-table td:first-child {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--bone);
+  }
+
+  .badge {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.58rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.15rem 0.5rem;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+
+  .badge-orange { background: rgba(224,123,0,0.15); color: var(--orange); }
+  .badge-green  { background: rgba(30,102,65,0.2);  color: #4CAF82; }
+  .badge-grey   { background: rgba(136,136,136,0.15); color: var(--grey); }
+  .badge-red    { background: rgba(200,60,60,0.15); color: #E07070; }
+
+  /* ── LIMIT BOX ── */
+  .limit-box {
+    background: var(--graphite);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.5rem 2rem;
+    margin: 1.5rem 0;
+    max-width: 680px;
+  }
+
+  .limit-item {
+    display: flex;
+    gap: 1rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .limit-item:last-child { border-bottom: none; }
+
+  .limit-icon {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--grey);
+    min-width: 20px;
+    padding-top: 0.1rem;
+  }
+
+  .limit-item p { font-size: 0.83rem; margin: 0; max-width: none; }
+  .limit-item strong { color: var(--bone); }
+
+  /* ── PROPOSAL ── */
+  .proposal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+
+  .prop-card {
+    background: var(--graphite);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.25rem;
+  }
+
+  .prop-card .prop-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--orange);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.75rem;
+  }
+
+  .prop-card ul {
+    list-style: none;
+  }
+
+  .prop-card ul li {
+    font-size: 0.82rem;
+    color: rgba(245,244,240,0.8);
+    padding: 0.3rem 0;
+    border-bottom: 1px solid rgba(245,244,240,0.05);
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .prop-card ul li:last-child { border-bottom: none; }
+  .prop-card ul li::before { content: '·'; color: var(--orange); }
+
+  /* ── FOUNDER ── */
+  .founder-block {
+    background: var(--graphite);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2rem;
+    margin: 1.5rem 0;
+    max-width: 600px;
+  }
+
+  .founder-block .stat {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--orange);
+    line-height: 1;
+    margin-bottom: 0.1rem;
+  }
+
+  .founder-block .stat-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--grey);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 1.5rem;
+  }
+
+  .founder-row {
+    display: flex;
+    gap: 2rem;
+    margin-top: 1rem;
+  }
+
+  .founder-item .fi-val {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.4rem;
+    color: var(--bone);
+  }
+
+  .founder-item .fi-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.58rem;
+    color: var(--grey);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── TAGLINE FINAL ── */
+  .tagline-final {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--grey);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  code {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    background: rgba(245,244,240,0.06);
+    padding: 0.1rem 0.35rem;
+    border-radius: 2px;
+    color: var(--bone);
+  }
+
+  .highlight { color: var(--orange); }
+  .muted { color: var(--grey); }
+</style>
+</head>
+<body>
+
+<!-- ── SIDEBAR NAV ── -->
+<nav>
+  <div class="nav-logo">
+    <div class="eje">EJE <span class="diag">DIAGNOSTICS</span></div>
+    <div class="tagline">Presentación operativa · Jun 2026</div>
+  </div>
+  <ul>
+    <li><a href="#s0" class="active"><span class="nav-num">00</span>Origen y construcción</a></li>
+    <li><a href="#s1"><span class="nav-num">01</span>El problema operativo</a></li>
+    <li><a href="#s2"><span class="nav-num">02</span>La arquitectura</a></li>
+    <li><a href="#s3"><span class="nav-num">03</span>Pipeline en detalle</a></li>
+    <li><a href="#s4"><span class="nav-num">04</span>El límite honesto</a></li>
+    <li><a href="#s5"><span class="nav-num">05</span>La propuesta</a></li>
+    <li><a href="#s6"><span class="nav-num">06</span>Quién está detrás</a></li>
+  </ul>
+  <div class="nav-footer">Barsat · Jun 2026</div>
+</nav>
+
+<!-- ── MAIN ── -->
+<main>
+
+<!-- ── S0 ORIGEN ── -->
+<section id="s0">
+  <div class="section-eyebrow">00 — Origen y construcción</div>
+  <h2>Un sistema <span>construido</span> para un problema documentado</h2>
+
+  <p class="lead">Eje Diagnostics se construyó como un proyecto estandarizado, replicable y comprobable. El primer objetivo fue claro desde el arranque: identificar y resolver un problema operacional real en la logística de última milla.</p>
+
+  <p>No una solución en busca de un problema — un problema documentado primero, una solución construida después.</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-label">Marca y voz</div>
+      <h4>Brand book completo antes de la primera línea de código</h4>
+      <p>Paleta, tipografía, tono, reglas de uso. Todo lo que comunica Eje Diagnostics sigue ese estándar — nada se improvisa en la comunicación.</p>
+    </div>
+    <div class="card">
+      <div class="card-label">Sistema de agentes</div>
+      <h4>Verificación independiente en cada etapa</h4>
+      <p>Ningún output llega al cliente sin pasar por un agente verificador adversarial que lo cuestiona. El sistema se controla a sí mismo.</p>
+    </div>
+    <div class="card">
+      <div class="card-label">Conocimiento de campo</div>
+      <h4>Fuentes primarias documentadas</h4>
+      <p>Proveedores TMS, literatura de falla de implementación, casos publicados. Cada dato sale con nivel de certeza: VERIFICADO, REFERENCIADO o ESTIMACIÓN.</p>
+    </div>
+    <div class="card">
+      <div class="card-label">Reglas duras</div>
+      <h4>Establecidas al inicio. No se negocian.</h4>
+      <p>Ningún número sin fuente. Ningún dato heredado sin verificar. Honestidad explícita sobre lo que se sabe y lo que no.</p>
+    </div>
+  </div>
+
+  <p class="muted" style="font-size:0.8rem; margin-top:1rem;">Cada decisión del proyecto está documentada. Cada agente tiene un rol definido y límites claros. Lo que existe funciona. Lo que falta, está nombrado como pendiente — no como promesa.</p>
+</section>
+
+<!-- ── S1 PROBLEMA ── -->
+<section id="s1">
+  <div class="section-eyebrow">01 — El problema operativo</div>
+  <h2>La brecha entre el <span>dato</span> y la decisión</h2>
+
+  <p class="lead">El problema no es la falta de tecnología. Es la brecha entre el dato que el sistema genera y la decisión que el operador toma.</p>
+
+  <div class="disclaimer">
+    Lo que sigue no son observaciones de campo propias — son patrones identificados desde el análisis teórico y la literatura especializada en implementación de TMS. Se presentan como hipótesis documentadas, no como verdades comprobadas en operación real.
+  </div>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-label">Patrón 01</div>
+      <h4>La adopción real es menor de lo que muestran las licencias activas</h4>
+      <p>Los sistemas figuran activos mientras el equipo mantiene procesos paralelos — planillas propias, grupos de mensajería, registros manuales. El indicador más confiable de sub-uso no es técnico: es la existencia de ese sistema paralelo.</p>
+      <div class="source">Nuvocargo, GoComet, ShipperGuide — 2025–2026</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Patrón 02</div>
+      <h4>El módulo de reportes es el más ignorado</h4>
+      <p>Los operadores usan el TMS para tareas específicas y cierran la sesión. El módulo de estadísticas — el que contiene los datos con mayor valor — raramente se revisa de forma sistemática.</p>
+      <div class="source">Nuvocargo 2026 · GoComet 2025</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Patrón 03</div>
+      <h4>La calidad del dato depende del último eslabón: el conductor</h4>
+      <p>El registro se hace cuando puede, no cuando corresponde. Timestamps de entrega, motivos de no entrega, incidencias — el dato existe, pero no refleja lo que pasó.</p>
+      <div class="source">Síntesis de fuentes secundarias — requiere validación con operación real</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Patrón 04</div>
+      <h4>La integración con sistemas heredados es la causa de falla primaria</h4>
+      <p>Cuando el TMS no habla con el ERP, alguien carga los datos a mano en dos sistemas. El 35% del tiempo de los equipos se consume en tareas manuales de gestión de datos.</p>
+      <div class="source">LeanDNA + Wakefield · Supply Chain Readiness Index · n=250 · dic 2023</div>
+    </div>
+  </div>
+
+  <div class="disclaimer" style="margin-top:1.5rem;">
+    Aclaración explícita: estos patrones son hipótesis informadas por fuentes secundarias. La validación contra una operación real es el propósito de la auditoría — no su punto de partida.
+  </div>
+</section>
+
+<!-- ── S2 ARQUITECTURA ── -->
+<section id="s2">
+  <div class="section-eyebrow">02 — La arquitectura del sistema</div>
+  <h2>Sistema <span>multiagente</span> con decisiones humanas</h2>
+
+  <p class="lead">Eje Diagnostics es un sistema multiagente que combina inteligencia artificial con decisiones humanas del operador. No es un agente de IA que corre solo — es una arquitectura donde cada componente tiene un rol definido, límites claros, y al menos un mecanismo de verificación independiente.</p>
+
+  <p>Las decisiones críticas no las toma el sistema: las toma el operador con el sistema como soporte.</p>
+
+  <!-- FLOW DIAGRAM -->
+  <div class="flow">
+    <div class="flow-col">
+      <div class="flow-node agent">CSV del cliente<span class="node-label">datos de entrada</span></div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-node human">YO — Filtro humano inicial<span class="node-label">revisión manual del archivo</span></div>
+      <div class="flow-arrow">↓</div>
+
+      <div style="display:flex; gap:0.75rem; width:100%; align-items:stretch;">
+        <div style="flex:1;">
+          <div class="flow-node agent" style="height:100%;">Research Agent<span class="node-label">contextualiza la operación</span></div>
+        </div>
+        <div style="display:flex;align-items:center;color:var(--grey);font-family:'IBM Plex Mono',monospace;font-size:0.75rem;">→</div>
+        <div style="flex:1;">
+          <div class="flow-node verif" style="height:100%;">Verification Agent<span class="node-label">compuerta adversarial</span></div>
+        </div>
+      </div>
+
+      <div class="flow-arrow">↓</div>
+      <div class="flow-node agent">TecOps Diagnostics<span class="node-label">4 capas de análisis</span></div>
+      <div class="flow-arrow" style="color:var(--orange);">↓ <a href="#s3" class="internal-link" style="margin:0; vertical-align:middle; font-size:0.6rem;">ver pipeline en detalle →</a></div>
+      <div class="flow-node agent">ROI Calculator<span class="node-label">cuantificación en USD por vehículo</span></div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-node human">YO — Control de output<span class="node-label">cruce sistema + criterio humano</span></div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-node agent">Report Formatter Agent<span class="node-label">en desarrollo</span></div>
+
+      <div class="flow-branch" style="margin-top:0.5rem;">
+        <div class="flow-branch-item">Reporte operacional<br><span style="color:var(--grey);">3 hallazgos · 3 acciones · ROI</span></div>
+        <div class="flow-branch-item">Reporte completo<br><span style="color:var(--grey);">análisis extendido · decisión estratégica</span></div>
+      </div>
+
+      <div class="flow-arrow">↓</div>
+      <div class="flow-node agent" style="border-color:rgba(224,123,0,0.3);">Proposal Generator Agent<span class="node-label">se activa solo si hay valor confirmado · en desarrollo</span></div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-node output">Propuesta de monitoreo mensual</div>
+    </div>
+  </div>
+
+  <!-- ETAPA 0 -->
+  <h3 id="etapa0">Etapa 0 — Yo soy el primer filtro</h3>
+  <p>Antes de pasarle los datos al sistema, abro el CSV y lo reviso manualmente. Soy la primera capa de control — y a veces la más importante.</p>
+
+  <ul class="rules-list">
+    <li><strong>Campos vacíos sistemáticos</strong> — si el operador me dijo que tiene funcionando el módulo de temperatura y no hay una sola línea con ese dato, el sensor no está integrado o los datos no se exportan. Eso es información antes de correr cualquier análisis.</li>
+    <li><strong>Valores constantes donde debería haber variación</strong> — si todos los registros de <code>motivo_no_entrega</code> dicen lo mismo, el campo no tiene valor operativo. Si todos los <code>kms_recorridos</code> son idénticos, el odómetro no está integrado al sistema.</li>
+    <li><strong>Timestamps que no reflejan la operación</strong> — si todos los registros de entrega tienen el mismo horario, el conductor cerró todo junto al final del día. El dato existe, pero no dice nada sobre lo que pasó en ruta.</li>
+    <li><strong>Columnas que el operador mencionó pero no aparecen en el CSV</strong> — la desconexión entre lo que el sistema tiene y lo que exporta es en sí misma un hallazgo.</li>
+    <li><strong>Datos corruptos o fuera de rango</strong> — valores negativos en campos de tiempo, fechas imposibles, coordenadas fuera del área de operación declarada.</li>
+  </ul>
+
+  <p style="color:var(--orange); font-size:0.85rem; margin-top:0.5rem;">A veces, el primer hallazgo está acá — antes de correr un solo agente.</p>
+
+  <!-- ETAPA 1 -->
+  <h3>Etapa 1 — Research Agent + Verification Agent</h3>
+  <p>El <strong>Research Agent</strong> contextualiza la operación: entiende el tipo de flota, el sistema que usa el cliente, las características del sector. Genera el marco de referencia para que TecOps interprete correctamente los datos — sin ese contexto, una anomalía en temperatura puede ser un problema de cadena de frío o simplemente un sensor mal calibrado.</p>
+  <p>El <strong>Verification Agent</strong> es adversarial por diseño. Su función es cuestionar lo que generó el Research Agent antes de que ese output siga adelante. Revisa que ningún dato se use fuera de su dominio original, que ningún número esté sin fuente, que ninguna afirmación supere lo que la evidencia sostiene.</p>
+  <p class="muted" style="font-size:0.82rem;">Estos dos agentes operan por separado. Uno produce, el otro cuestiona. La compuerta hacia TecOps solo se abre cuando el Verification Agent no encuentra objeciones que bloqueen el output.</p>
+
+  <!-- ETAPA 2 TECOPS -->
+  <h3 id="etapa2">Etapa 2 — TecOps Diagnostics (4 capas)</h3>
+  <p>El agente central del sistema. Procesa el CSV en secuencia — capa por capa, cada una alimenta a la siguiente.</p>
+
+  <div class="layers">
+    <div class="layer">
+      <div class="layer-num">Capa 1 — Validación</div>
+      <h4>Calidad del dato antes de interpretarlo</h4>
+      <p>Campos faltantes, rangos inválidos, timestamps inconsistentes, valores constantes donde debería haber variación. Si el dato está roto, lo dice antes de analizarlo — no después.</p>
+    </div>
+    <div class="layer">
+      <div class="layer-num">Capa 2 — Técnica</div>
+      <h4>Comportamiento de dispositivos</h4>
+      <p>GPS, sensores de temperatura, odómetro. Detecta drift, falsas alarmas recurrentes, señal intermitente. Un sensor que miente gradualmente es más peligroso que uno que falla abiertamente.</p>
+    </div>
+    <div class="layer">
+      <div class="layer-num">Capa 3 — Operativa</div>
+      <h4>Lo que pasó en la operación real</h4>
+      <p>Cadena de frío, aperturas de puerta, tiempos de espera, incidencias no registradas. Cruza lo que el sistema registró contra lo que debería haber registrado.</p>
+    </div>
+    <div class="layer">
+      <div class="layer-num">Capa 4 — Ruta y tiempos</div>
+      <h4>Eficiencia de ruta y patrones</h4>
+      <p>Desvíos, sobretiempo, kilómetros adicionales. Detecta patrones sistemáticos — no eventos aislados. Un desvío repetido en el mismo tramo es una decisión operativa que el sistema no está registrando.</p>
+    </div>
+  </div>
+
+  <a href="#s3" class="internal-link">→ Ver ejemplos de errores detectados por TecOps en Sección 03</a>
+
+  <!-- ETAPA 3 ROI -->
+  <h3 id="etapa3">Etapa 3 — ROI Calculator</h3>
+  <p>Cada hallazgo que genera TecOps llega al ROI Calculator con el dato que lo respalda. Lo convierte a pérdida estimada en USD por vehículo.</p>
+
+  <ul class="rules-list">
+    <li>La frecuencia se calcula desde el CSV — nunca se estima libremente</li>
+    <li>Se cuantifica por vehículo individual, nunca agregado entre vehículos</li>
+    <li>Cada hallazgo sale con nivel de confianza explícito: <span class="badge badge-grey">BAJA</span> <span class="badge badge-orange">MEDIA</span> <span class="badge badge-green">ESTÁNDAR</span> según los días de dataset disponibles</li>
+    <li>Los supuestos se declaran separados de los datos verificados</li>
+    <li>Todo hallazgo sale con rango de incertidumbre: escenario conservador y escenario probable</li>
+    <li>Lo que no se puede cuantificar se declara como "A RELEVAR EN VISITA TÉCNICA" — no se inventa un número</li>
+  </ul>
+
+  <!-- CONTROL -->
+  <h3>Control — Yo reviso el output antes de que salga</h3>
+  <p>El reporte no sale automático. Antes de pasárselo al Report Formatter, reviso el output de TecOps y del ROI Calculator contra lo que encontré en la revisión manual inicial. Si un hallazgo del sistema contradice algo que vi cuando abrí el CSV, se investiga esa contradicción antes de incluirlo.</p>
+  <p class="muted" style="font-size:0.82rem;">El reporte final es el cruce entre lo que el sistema detectó y lo que el criterio humano confirma.</p>
+
+  <!-- REPORT FORMATTER -->
+  <h3>Etapa 4 — Report Formatter Agent <span class="badge badge-grey" style="vertical-align:middle; margin-left:0.5rem;">en desarrollo</span></h3>
+  <p>Toma el output verificado y lo convierte en dos formatos según el destinatario.</p>
+
+  <div style="display:flex; gap:1rem; margin:1rem 0;">
+    <div class="card" style="flex:1;">
+      <div class="card-label">Reporte operacional</div>
+      <p>Para el equipo de operaciones. Tres hallazgos, tres acciones ejecutables, ROI por vehículo. Lenguaje de campo. Diseñado para que el coordinador sepa qué hacer mañana.</p>
+    </div>
+    <div class="card" style="flex:1;">
+      <div class="card-label">Reporte completo</div>
+      <p>Para la gerencia. Análisis extendido con contexto de cada hallazgo, supuestos del ROI declarados, y mapa de brechas entre lo que el sistema registra y lo que la operación requiere.</p>
+    </div>
+  </div>
+
+  <!-- PROPOSAL GEN -->
+  <h3>Etapa 5 — Proposal Generator Agent <span class="badge badge-grey" style="vertical-align:middle; margin-left:0.5rem;">en desarrollo</span></h3>
+  <p>Se activa únicamente si la auditoría encuentra valor confirmado. Genera una propuesta formal de monitoreo mensual construida sobre los hallazgos reales de la auditoría — no en el vacío. Si el análisis encontró fricción en temperatura, la propuesta incluye monitoreo de temperatura.</p>
+  <p class="muted" style="font-size:0.82rem;">El trigger es valor confirmado, nunca antes.</p>
+</section>
+
+<!-- ── S3 PIPELINE ── -->
+<section id="s3">
+  <div class="section-eyebrow">03 — Pipeline en detalle</div>
+  <h2>Cómo <span>TecOps</span> detecta lo que detecta</h2>
+
+  <p class="lead">Cada parámetro de detección fue definido a partir de un error específico planteado en simulación. El proceso fue este:</p>
+
+  <ul class="rules-list" style="margin-bottom:1.5rem;">
+    <li>Se diseñó una operación simulada con errores deliberados e identificables — cada uno con causa conocida, manifestación en datos y costo estimable</li>
+    <li>Para cada error, se definió un parámetro: qué campo mirar, qué condición dispara la alerta, qué umbral distingue ruido de anomalía real</li>
+    <li>Se definió la devolución específica: no solo "hay un problema" — sino qué tipo, qué dato lo respalda, qué acción concreta corresponde</li>
+    <li>Se corrió el agente contra el dataset simulado y se verificó que cada parámetro detectara lo correcto sin generar falsos positivos en registros limpios</li>
+  </ul>
+
+  <h3>Ejemplos de errores simulados detectados por el agente</h3>
+
+  <div class="disclaimer">
+    Aclaración explícita: lo que sigue es una prueba construida con errores plantados deliberadamente en un dataset simulado. No es base empírica de campo — es una demostración de que el sistema detecta lo que fue diseñado para detectar.<br><br>
+    Dataset: 18 camiones · operación de lácteos y pollo · 3 días de datos.<br>
+    Resultado: 6 de 6 anomalías plantadas detectadas · 0 falsos positivos en registros limpios.
+  </div>
+
+  <div class="error-item">
+    <div class="error-tag">Error 1 · Capa 2 — Técnica</div>
+    <h4>Sensor de temperatura con drift progresivo</h4>
+    <p>Deriva gradual de 0,3°C por hora — constante, sin saltar ningún umbral de alarma puntual. Una alarma estándar no lo hubiera cazado.</p>
+    <div class="detection">↳ Detectado por análisis de tendencia dentro del viaje. Un sensor que miente de forma gradual es más peligroso que uno que falla abiertamente — porque el primero parece funcionar.</div>
+  </div>
+
+  <div class="error-item">
+    <div class="error-tag">Error 2 · Capa 1 — Validación</div>
+    <h4>Timestamps de entrega colapsados al cierre del día</h4>
+    <p>Todos los registros de entrega de un vehículo tenían el mismo timestamp: la hora de regreso al depósito.</p>
+    <div class="detection">↳ Detectado por varianza cero en el campo de timestamps de parada. Devolución: el dato de tiempos de entrega no tiene valor operativo — no refleja lo que pasó en ruta.</div>
+  </div>
+
+  <div class="error-item">
+    <div class="error-tag">Error 3 · Capa 1 — Validación</div>
+    <h4>Motivo de no entrega con valor constante</h4>
+    <p>Un vehículo registró "cliente ausente" en el 100% de sus no entregas durante 3 días.</p>
+    <div class="detection">↳ Detectado por frecuencia anómala de un valor único en campo categórico. Devolución: el campo está siendo usado como campo libre — los datos de motivo no son analizables.</div>
+  </div>
+
+  <div class="error-item">
+    <div class="error-tag">Error 4 · Capa 4 — Ruta y tiempos</div>
+    <h4>Desvío sistemático en el mismo tramo</h4>
+    <p>Un vehículo se desviaba del trayecto planificado en el mismo segmento de ruta, tres veces por día, durante los 3 días.</p>
+    <div class="detection">↳ Detectado por repetición de patrón geoespacial fuera de ruta. Un desvío puntual es ruido. Un desvío que se repite en el mismo tramo es una decisión operativa que el sistema no está registrando.</div>
+  </div>
+
+  <div class="error-item">
+    <div class="error-tag">Error 5 · Capa 1 — Validación</div>
+    <h4>Campo de consumo de combustible con valor plano</h4>
+    <p>Todos los registros de consumo de combustible eran idénticos para todos los vehículos.</p>
+    <div class="detection">↳ Detectado por varianza cero en campo que debería reflejar variación real. Devolución: el odómetro no está integrado — el dato es estimación plana, no medición.</div>
+  </div>
+
+  <div class="error-item">
+    <div class="error-tag">Error 6 · Capa 3 — Operativa</div>
+    <h4>Apertura de puerta frigorífica fuera de parada registrada</h4>
+    <p>Un vehículo registró una apertura de puerta en un punto geográfico donde no había ninguna parada programada ni registrada.</p>
+    <div class="detection">↳ Detectado por cruce entre el log de eventos del sensor y el registro de paradas del GPS. Devolución: apertura no justificada — posible incidencia no reportada.</div>
+  </div>
+
+  <!-- TABLE -->
+  <h3>Lo que sale en cada hallazgo</h3>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Señal en los datos</th>
+        <th>Lo que indica</th>
+        <th>Tipo</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Timestamps de entrega iguales en todas las paradas</td>
+        <td>El conductor cerró todo junto — no hay visibilidad real de la ruta</td>
+        <td><span class="badge badge-grey">Calidad del dato</span></td>
+      </tr>
+      <tr>
+        <td><code>motivo_no_entrega</code> con valor constante</td>
+        <td>Campo sin valor operativo — usado como campo libre</td>
+        <td><span class="badge badge-grey">Calidad del dato</span></td>
+      </tr>
+      <tr>
+        <td><code>temperatura</code> con drift progresivo sin alarma puntual</td>
+        <td>Sensor descalibrado — miente de forma gradual</td>
+        <td><span class="badge badge-orange">Técnico</span></td>
+      </tr>
+      <tr>
+        <td><code>kms_recorridos</code> idéntico para todos los viajes</td>
+        <td>Odómetro no integrado — distancia es estimación plana</td>
+        <td><span class="badge badge-orange">Infraestructura rota</span></td>
+      </tr>
+      <tr>
+        <td>Desvío geoespacial repetido en el mismo tramo</td>
+        <td>Decisión operativa recurrente que el sistema no registra</td>
+        <td><span class="badge badge-orange">Decisión fuera del sistema</span></td>
+      </tr>
+      <tr>
+        <td>Apertura de sensor fuera de parada registrada</td>
+        <td>Incidencia no reportada — posible ruptura de cadena de frío</td>
+        <td><span class="badge badge-red">Operativo crítico</span></td>
+      </tr>
+      <tr>
+        <td><code>consumo_combustible</code> igual para todos los vehículos</td>
+        <td>Dato no integrado — fricción o fuga no detectable</td>
+        <td><span class="badge badge-grey">Dato faltante crítico</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- DISCLAIMER TECOPS PRIMER MODELO -->
+  <div class="card" style="margin-top:2rem; border-color: rgba(224,123,0,0.25);">
+    <div class="card-label">Estado del sistema</div>
+    <h4>TecOps es un primer modelo</h4>
+    <p>Fue construido y calibrado a partir de simulaciones — no de operaciones reales. Al enfrentarse a un dataset de producción, puede encontrar situaciones que los parámetros actuales no anticipan, generar falsos positivos en patrones nuevos, o no detectar anomalías que se manifiestan de formas que las simulaciones no reprodujeron.</p>
+    <p style="margin-top:0.75rem;">Eso no es un defecto — es el estado honesto de un primer modelo. Los errores que aparezcan en los primeros análisis reales son información: cada uno refina un parámetro, ajusta un umbral, mejora la devolución. El sistema está diseñado para perfeccionarse en contacto con datos reales.</p>
+  </div>
+
+  <a href="#etapa3" class="internal-link">← Volver al flujo — Etapa 3: ROI Calculator</a>
+</section>
+
+<!-- ── S4 LIMITE ── -->
+<section id="s4">
+  <div class="section-eyebrow">04 — El límite honesto</div>
+  <h2>Lo que sabemos. Lo que <span>falta</span>. Sin vueltas.</h2>
+
+  <p class="lead">El sistema está construido y probado contra datos simulados. Hasta acá, funciona como fue diseñado. Lo que no sabemos es cómo responde ante lo que no anticipamos.</p>
+
+  <div class="limit-box">
+    <div class="limit-item">
+      <div class="limit-icon">01</div>
+      <p><strong>El volumen real.</strong> Una flota operando 30 días genera órdenes de magnitud más de datos que cualquier simulación. No sabemos cómo responde el sistema a ese volumen hasta procesarlo.</p>
+    </div>
+    <div class="limit-item">
+      <div class="limit-icon">02</div>
+      <p><strong>La suciedad real del dato.</strong> En producción, los campos están mal llenados, los timestamps son inconsistentes, hay valores imposibles que ninguna simulación anticipa. El sistema fue diseñado para manejar eso — pero diseñado no es lo mismo que probado.</p>
+    </div>
+    <div class="limit-item">
+      <div class="limit-icon">03</div>
+      <p><strong>Los patrones específicos de cada operación.</strong> Cada flota tiene sus propios workarounds, sus propias anomalías recurrentes, su propia forma de romper los supuestos del sistema. Eso no se puede anticipar desde afuera.</p>
+    </div>
+  </div>
+
+  <p style="color:var(--bone); font-size:0.9rem; font-weight:500;">Eso no es una debilidad del diseño. Es la diferencia entre un sistema honesto y uno que promete lo que no puede demostrar todavía.</p>
+  <p style="color:var(--orange); font-size:0.95rem; font-weight:500; margin-top:0.75rem;">La única forma de saber si funciona es correrlo contra datos reales.</p>
+</section>
+
+<!-- ── S5 PROPUESTA ── -->
+<section id="s5">
+  <div class="section-eyebrow">05 — La propuesta</div>
+  <h2>Qué ofrece. Qué necesita. Qué <span>entrega</span>.</h2>
+
+  <div class="proposal-grid">
+    <div class="prop-card">
+      <div class="prop-label">Lo que ofrece</div>
+      <ul>
+        <li>Auditoría completa sobre los CSV que ya genera la operación</li>
+        <li>Sin software nuevo, sin instalación, sin consultoría teórica</li>
+        <li>3 hallazgos concretos con el dato que los respalda</li>
+        <li>3 acciones ejecutables para la semana siguiente</li>
+        <li>ROI cuantificado en USD por vehículo, con supuestos declarados</li>
+        <li>Reporte operacional + reporte completo para gerencia</li>
+      </ul>
+    </div>
+    <div class="prop-card">
+      <div class="prop-label">Lo que necesita para validar</div>
+      <ul>
+        <li>Un dataset real</li>
+        <li>CSV de rutas, entregas y tiempos — últimos 60 a 90 días</li>
+        <li>De una unidad de operación — no el total del grupo</li>
+        <li>Una parte representativa es suficiente para validar si el sistema responde como fue diseñado</li>
+      </ul>
+    </div>
+    <div class="prop-card">
+      <div class="prop-label">Lo que entrega a cambio</div>
+      <ul>
+        <li>El análisis completo, sin costo</li>
+        <li>Hallazgos, acciones y ROI quedan en manos del grupo</li>
+        <li>Independientemente de lo que siga después</li>
+        <li>Si hay valor, la conversación sobre monitoreo continuo tiene base real</li>
+        <li>Si no hay valor, Eje Diagnostics se enteró gratis</li>
+      </ul>
+    </div>
+  </div>
+
+  <p style="color:var(--orange); font-size:1rem; font-weight:500; margin-top:2rem;">El único pedido: datos reales. Todo lo demás corre de este lado.</p>
+</section>
+
+<!-- ── S6 FOUNDER ── -->
+<section id="s6">
+  <div class="section-eyebrow">06 — Quién está detrás</div>
+  <h2>Un técnico. Un <span>sistema</span>. Buenos Aires.</h2>
+
+  <div class="founder-block">
+    <div class="stat">15</div>
+    <div class="stat-label">años de refrigeración técnica en taller — desde los 13</div>
+
+    <p style="max-width:none; font-size:0.88rem;">Eso significa entender qué pasa cuando un sensor marca mal a las tres de la mañana <strong>y</strong> qué pasa cuando ese dato nunca llega al tablero del gerente. Los dos extremos de la misma cadena.</p>
+
+    <div class="founder-row">
+      <div class="founder-item">
+        <div class="fi-val">LIC.</div>
+        <div class="fi-label">Planificación logística · en curso</div>
+      </div>
+      <div class="founder-item">
+        <div class="fi-val">BUE</div>
+        <div class="fi-label">Buenos Aires · Argentina</div>
+      </div>
+      <div class="founder-item">
+        <div class="fi-val">$0</div>
+        <div class="fi-label">Presupuesto operativo</div>
+      </div>
+    </div>
+  </div>
+
+  <p>Eje Diagnostics no es una consultora. No vende software. No instala sensores. Toma los datos que ya existen, los procesa con un sistema construido para encontrar lo que nadie está mirando, y entrega acciones — no informes.</p>
+
+  <p class="muted" style="font-size:0.82rem;">Un solo fundador. Proceso documentado desde el primer día.</p>
+
+  <div class="tagline-final">
+    Eje Diagnostics · Cero promesas. Tres hallazgos. Acción en 48h. · Buenos Aires · 2026
+  </div>
+</section>
+
+</main>
+
+<script>
+  // Active nav on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('nav ul li a');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => link.classList.remove('active'));
+        const active = document.querySelector(`nav a[href="#${entry.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { threshold: 0.3 });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
