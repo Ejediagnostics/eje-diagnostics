@@ -752,7 +752,7 @@
     <div class="flow-col">
       <div class="flow-node agent">CSV del cliente<span class="node-label">datos de entrada</span></div>
       <div class="flow-arrow">↓</div>
-      <div class="flow-node human">YO — Filtro humano inicial<span class="node-label">revisión manual del archivo</span></div>
+      <div class="flow-node human">Inspección manual del archivo<span class="node-label">filtro humano antes de los agentes</span></div>
       <div class="flow-arrow">↓</div>
 
       <div style="display:flex; gap:0.75rem; width:100%; align-items:stretch;">
@@ -770,7 +770,7 @@
       <div class="flow-arrow" style="color:var(--orange);">↓ <a href="#s3" class="internal-link" style="margin:0; vertical-align:middle; font-size:0.6rem;">ver pipeline en detalle →</a></div>
       <div class="flow-node agent">ROI Calculator<span class="node-label">cuantificación en USD por vehículo</span></div>
       <div class="flow-arrow">↓</div>
-      <div class="flow-node human">YO — Control de output<span class="node-label">cruce sistema + criterio humano</span></div>
+      <div class="flow-node human">Control de output<span class="node-label">revisión humana antes de entregar</span></div>
       <div class="flow-arrow">↓</div>
       <div class="flow-node agent">Report Formatter Agent<span class="node-label">en desarrollo</span></div>
 
@@ -787,8 +787,8 @@
   </div>
 
   <!-- ETAPA 0 -->
-  <h3 id="etapa0">Etapa 0 — Yo soy el primer filtro</h3>
-  <p>Antes de pasarle los datos al sistema, abro el CSV y lo reviso manualmente. Soy la primera capa de control — y a veces la más importante.</p>
+  <h3 id="etapa0">Etapa 0 — Inspección manual del archivo</h3>
+  <p>Antes de que el sistema procese los datos, el archivo pasa por una revisión manual. Es la primera capa de control — y a veces la más importante.</p>
 
   <ul class="rules-list">
     <li><strong>Campos vacíos sistemáticos</strong> — si el operador me dijo que tiene funcionando el módulo de temperatura y no hay una sola línea con ese dato, el sensor no está integrado o los datos no se exportan. Eso es información antes de correr cualquier análisis.</li>
@@ -849,8 +849,8 @@
   </ul>
 
   <!-- CONTROL -->
-  <h3>Control — Yo reviso el output antes de que salga</h3>
-  <p>El reporte no sale automático. Antes de pasárselo al Report Formatter, reviso el output de TecOps y del ROI Calculator contra lo que encontré en la revisión manual inicial. Si un hallazgo del sistema contradice algo que vi cuando abrí el CSV, se investiga esa contradicción antes de incluirlo.</p>
+  <h3>Control — Revisión del output antes de que salga</h3>
+  <p>El reporte no sale automático. El output de TecOps y del ROI Calculator se cruza contra lo que se encontró en la inspección manual inicial del archivo. Si un hallazgo del sistema contradice algo identificado en esa revisión, se investiga la contradicción antes de incluirlo.</p>
   <p class="muted" style="font-size:0.82rem;">El reporte final es el cruce entre lo que el sistema detectó y lo que el criterio humano confirma.</p>
 
   <!-- REPORT FORMATTER -->
