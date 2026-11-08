@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Federico Acevedo: n8n + AI workflows for operations and logistics. Three tested portfolio cases.">
+<title>Operations Automation Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: one reading column of case files; each case = thumbnails strip, then problem / build / proof / fixes */
+:root{
+  --bg:#0B111C; --surface:#121A28; --line:#25314A; --fg:#E9EEF5; --muted:#97A3B7; --accent:#FF6B57; --accent-ink:#0B111C; --ok:#4FC28B;
+  --f-display:'Sora',ui-sans-serif,system-ui,sans-serif; --f-body:'IBM Plex Sans',ui-sans-serif,system-ui,sans-serif; --f-mono:'IBM Plex Mono',ui-monospace,monospace;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){--bg:#F5F6F9;--surface:#FFFFFF;--line:#DCE1EA;--fg:#141B27;--muted:#56627A;--accent:#D9452F;--accent-ink:#FFFFFF;--ok:#1F8A57;color-scheme:light}}
+:root[data-theme="light"]{--bg:#F5F6F9;--surface:#FFFFFF;--line:#DCE1EA;--fg:#141B27;--muted:#56627A;--accent:#D9452F;--accent-ink:#FFFFFF;--ok:#1F8A57;color-scheme:light}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:16px;line-height:1.6}
+.wrap{max-width:1040px;margin:0 auto;padding-block:48px 72px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.1;margin:0}
+h1{font-size:clamp(34px,5.4vw,56px);font-weight:800;letter-spacing:-.01em}
+h1 em,h2 em{font-style:normal;color:var(--accent)}
+h2{font-size:clamp(26px,3.6vw,36px);font-weight:700}
+h3{font-size:15px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+p{margin:0;max-width:68ch}
+.tag{display:inline-block;background:var(--accent);color:var(--accent-ink);font-weight:600;font-size:14px;padding:4px 10px;border-radius:6px}
+.mono{font-family:var(--f-mono);font-size:14px}
+.muted{color:var(--muted)}
+header{display:grid;gap:18px;padding-bottom:36px;border-bottom:1px solid var(--line)}
+.who{font-size:15px;color:var(--muted)}
+.who b{color:var(--fg);font-weight:600}
+.principles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:8px}
+.pr{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.pr b{display:block;font-family:var(--f-display);font-size:17px;margin-bottom:4px}
+.pr span{color:var(--muted);font-size:15px}
+nav{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+nav a{color:var(--fg);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:14px}
+nav a:hover,nav a:focus-visible{border-color:var(--accent);color:var(--accent);outline:none}
+section.case{padding-top:56px;display:grid;gap:22px}
+.strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.strip img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px;border:1px solid var(--line);display:block}
+.cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px}
+.block{display:grid;gap:10px;min-width:0}
+ul{margin:0;padding-left:20px}
+li{margin:4px 0}
+.steps{counter-reset:s;list-style:none;padding:0}
+.steps li{counter-increment:s;position:relative;padding-left:34px;margin:8px 0}
+.steps li::before{content:counter(s);position:absolute;left:0;top:1px;width:22px;height:22px;border-radius:50%;border:1px solid var(--accent);color:var(--accent);font-family:var(--f-mono);font-size:12px;display:flex;align-items:center;justify-content:center}
+.who-does{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-size:13px;border-radius:999px;padding:3px 10px;border:1px solid var(--line);color:var(--muted)}
+.chip.code{border-color:var(--accent);color:var(--accent)}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:none}
+th{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+td.num{font-family:var(--f-mono);white-space:nowrap;color:var(--ok);font-variant-numeric:tabular-nums}
+.stack{font-size:14px;color:var(--muted)}
+footer{margin-top:64px;padding-top:24px;border-top:1px solid var(--line);display:grid;gap:8px;font-size:15px;color:var(--muted)}
+@media (max-width:760px){.principles,.cols{grid-template-columns:1fr}.strip{grid-template-columns:1fr 1fr}.strip img:last-child{grid-column:1/-1}}
+@media (prefers-reduced-motion:no-preference){nav a{transition:border-color .15s,color .15s}}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+<header>
+  <span class="tag" style="justify-self:start">n8n · AI · Operations &amp; Logistics</span>
+  <h1>Workflows that catch operational problems <em>before they cost a customer</em></h1>
+  <p class="who"><b>Federico Acevedo</b> · Logistics Planning (final year) · Google Project Management Certificate · 10+ years coordinating daily field operations</p>
+  <div class="principles">
+    <div class="pr"><b>Code decides</b><span>Rules, calculations, links and priorities live in code. The AI only explains or writes, from facts it is given.</span></div>
+    <div class="pr"><b>Nothing invented</b><span>A final check blocks any sentence with a number, date or ID that is not in the data.</span></div>
+    <div class="pr"><b>Tested before delivery</b><span>Synthetic data with problems planted on purpose, an answer key written first, and an independent re-implementation to compare.</span></div>
+  </div>
+  <nav aria-label="Cases"><a href="#case-3">AI Logistics Control Tower</a><a href="#case-1">Daily Ops Exceptions Monitor</a><a href="#case-2">AI Order-Status Replies</a></nav>
+</header>
+
+<!-- CASE 3 -->
+<section class="case" id="case-3">
+  <span class="tag" style="justify-self:start">Case 3</span>
+  <h2>AI Logistics Control Tower: <em>what to look at this week</em></h2>
+  <div class="strip">
+    <img src="img/C3_1_problem.png" alt="Problem: fleet, stock and orders live on three screens" loading="lazy">
+    <img src="img/C3_2_solution.png" alt="Solution: code calculates and ranks, AI explains" loading="lazy">
+    <img src="img/C3_3_result.png" alt="Result: van CAM-02 delay per stop grows from 4.9 to 12.4 minutes; 36 of 36 findings" loading="lazy">
+  </div>
+  <div class="cols">
+    <div class="block">
+      <h3>The problem</h3>
+      <p>A distributor with its own vans has three people on three screens: routes, stock and orders. The costly problems build up slowly and cross those lines: a van a little later every week, a summer product with a reorder point set for winter, a supplier whose lead time swings.</p>
+      <h3 style="margin-top:10px">What it does</h3>
+      <ol class="steps">
+        <li>Reads post-trip GPS from two providers through adapters. A quality gate stops the analysis if too few stops match a customer.</li>
+        <li>Applies fleet rules: long stops, late starts, delay that builds up, low km per hour, worsening week by week, service due by km.</li>
+        <li>Forecasts demand per product, testing up to 12 methods on the last 26 weeks, then computes safety stock, reorder point, days of cover and forecast bias.</li>
+        <li>Links findings across areas (van → trip → order → customer) and ranks them by severity, customer impact and urgency.</li>
+        <li>Three AI specialists explain each finding; the report skeleton, numbers and order come from code. A web page answers follow-up questions through one agent with four code tools.</li>
+      </ol>
+      <div class="who-does"><span class="chip code">code: rules, forecast, scoring</span><span class="chip">AI: explains, routes questions</span><span class="chip">code: final check</span></div>
+    </div>
+    <div class="block">
+      <h3>How it was tested</h3>
+      <div class="tbl"><table>
+        <tr><th>Criterion</th><th>Result</th></tr>
+        <tr><td>Findings equal to the answer key</td><td class="num">36 / 36</td></tr>
+        <tr><td>Planted problems found</td><td class="num">7 / 7</td></tr>
+        <tr><td>False positives</td><td class="num">0</td></tr>
+        <tr><td>Invented numbers or IDs</td><td class="num">0</td></tr>
+        <tr><td>Forecast and stock math vs. independent re-implementation</td><td class="num">100%</td></tr>
+        <tr><td>GPS provider B vs. provider A (same stops, ±2 min)</td><td class="num">66 / 66</td></tr>
+        <tr><td>Questions answered correctly (final run)</td><td class="num">6 / 6</td></tr>
+      </table></div>
+      <p class="muted" style="font-size:15px">8 weeks of synthetic operation: 10 vehicles, 100 wholesale customers, ~4,900 order lines, 60 products with 3 years of weekly sales.</p>
+      <h3 style="margin-top:10px">Found and fixed during the build</h3>
+      <ul>
+        <li>A stable pattern looked like "getting worse" by chance (1 time in 6): worsening now needs 20% growth, measured per stop.</li>
+        <li>The forecast-drift rule flagged 46 of 60 products on lumpy recent orders: replaced by a tracking signal (1 product).</li>
+        <li>The agent listed a customer who had only sent queries as "affected": the tool now returns the exact list, written by code.</li>
+        <li>A JSON reply was cut at the output cap because the model's reasoning counts inside it: cap and pauses measured and raised.</li>
+      </ul>
+    </div>
+  </div>
+  <p class="stack">n8n (self-hosted, Docker) · AI Agent with code tools · Groq (swappable model) · Google Sheets · Gmail · Telegram · web page served by n8n · JavaScript</p>
+</section>
+
+<!-- CASE 1 -->
+<section class="case" id="case-1">
+  <span class="tag" style="justify-self:start">Case 1</span>
+  <h2>Daily Ops Exceptions Monitor: <em>only what fails, every morning</em></h2>
+  <div class="strip">
+    <img src="img/C1_1_problem.png" alt="Problem: errors between orders, invoices and stock are found too late" loading="lazy">
+    <img src="img/C1_2_solution.png" alt="Solution: one n8n workflow with 10 rules checks everything every morning" loading="lazy">
+    <img src="img/C1_3_result.png" alt="Result: 25 of 25 planted errors found, 0 false alarms" loading="lazy">
+  </div>
+  <div class="cols">
+    <div class="block">
+      <h3>The problem</h3>
+      <p>Someone checks orders, supplier invoices, shipments and stock by hand every day. Overbilling, duplicate invoices and stuck parcels still slip through, and are found when they already cost money.</p>
+      <h3 style="margin-top:10px">What it does</h3>
+      <ol class="steps">
+        <li>Reads the four sources and a config tab with every threshold (nothing hard-coded).</li>
+        <li>Runs 10 rules: quantity or price invoiced vs. agreed, duplicate invoices, invoice without order, shipped without tracking after 24 h, in transit with no carrier events, carrier exceptions, low, mismatched or negative stock.</li>
+        <li>Sends a short report with only the exceptions, each with its rule, severity, detail and suggested action. An error workflow reports failures.</li>
+      </ol>
+      <div class="who-does"><span class="chip code">code: all 10 rules</span><span class="chip">no AI needed</span></div>
+    </div>
+    <div class="block">
+      <h3>How it was tested</h3>
+      <div class="tbl"><table>
+        <tr><th>Criterion</th><th>Result</th></tr>
+        <tr><td>Planted errors found</td><td class="num">25 / 25</td></tr>
+        <tr><td>False alarms</td><td class="num">0</td></tr>
+        <tr><td>Edge cases just under a threshold, correctly not flagged</td><td class="num">4 / 4</td></tr>
+      </table></div>
+      <p class="muted" style="font-size:15px">Synthetic data: 609 orders (1,032 lines), 954 invoices, 560 shipments, 60 products. Errors planted on purpose, with the expected result written down before the test.</p>
+    </div>
+  </div>
+  <p class="stack">n8n (self-hosted, Docker) · Google Sheets · email report · JavaScript</p>
+</section>
+
+<!-- CASE 2 -->
+<section class="case" id="case-2">
+  <span class="tag" style="justify-self:start">Case 2</span>
+  <h2>AI Order-Status Replies: <em>the code decides, the AI only writes</em></h2>
+  <div class="strip">
+    <img src="img/C2_1_problem.png" alt="Problem: where is my order emails answered by hand all day" loading="lazy">
+    <img src="img/C2_2_solution.png" alt="Solution: AI reads, code looks up the order and applies 8 rules, AI writes, check, reply or escalate" loading="lazy">
+    <img src="img/C2_3_result.png" alt="Result: 40 of 40 correct decisions, 0 invented data, 2 of 2 manipulation attempts with no effect" loading="lazy">
+  </div>
+  <div class="cols">
+    <div class="block">
+      <h3>The problem</h3>
+      <p>Most support emails ask the same thing: where is my order. Someone looks up the order, the tracking and the carrier, then types the reply, all day.</p>
+      <h3 style="margin-top:10px">What it does</h3>
+      <ol class="steps">
+        <li>The AI reads each email and extracts the intent; code extracts the order number and recalls the sender's last 5 emails for follow-ups.</li>
+        <li>Code looks up the real order and shipment and applies 8 rules: reply with the status, ask for a missing order number, or escalate (refunds, damage, several orders, unknown order, sender not matching the customer, order with a known problem).</li>
+        <li>The AI writes the reply from verified facts; a check blocks any order number, tracking code, date, email or link that is not in the data before it is sent in the same thread.</li>
+      </ol>
+      <div class="who-does"><span class="chip">AI: reads, writes</span><span class="chip code">code: lookup, 8 rules, memory, check</span></div>
+    </div>
+    <div class="block">
+      <h3>How it was tested</h3>
+      <div class="tbl"><table>
+        <tr><th>Criterion</th><th>Result</th></tr>
+        <tr><td>Correct decisions (reply or escalate)</td><td class="num">40 / 40</td></tr>
+        <tr><td>Invented data in replies</td><td class="num">0</td></tr>
+        <tr><td>Follow-ups resolved from memory</td><td class="num">3 / 3</td></tr>
+        <tr><td>Manipulation attempts with no effect</td><td class="num">2 / 2</td></tr>
+      </table></div>
+      <p class="muted" style="font-size:15px">40 synthetic emails from 322 customers, including follow-ups without an order number, privacy cases and prompt-injection attempts.</p>
+    </div>
+  </div>
+  <p class="stack">n8n (self-hosted, Docker) · LLM via swappable sub-node (Groq) · Gmail · Google Sheets · Telegram (escalations) · JavaScript</p>
+</section>
+
+<footer>
+  <p>All three projects are portfolio demos built on synthetic data for a fictional parts distributor. No real client data was used.</p>
+  <p>To discuss a workflow for your team, send me a message on Upwork.</p>
+</footer>
+</div>
+
+</body>
+</html>
